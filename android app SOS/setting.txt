@@ -1,0 +1,66 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background = "#E8F49A">
+    
+	<TextView
+        android:id="@+id/text_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal = "true"
+        android:layout_centerInParent = "true"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:text="Your Name"/>
+    
+    <TextView
+        android:id="@+id/text_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_center = "true"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:layout_below="@id/text_name"
+        android:text="Your Email" />
+    
+    <TextView
+        android:id="@+id/text_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_center = "true"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:layout_below="@id/text_email"
+        android:text="Your Password" />
+    
+    <TextView
+        android:id="@+id/text_telnum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_center = "true"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textSize="20sp"
+        android:layout_below="@id/text_password"
+        android:text="Your mobile phone number" />
+    
+    
+    <Button
+        android:id="@+id/SOS"
+        android:background = "#F17E66"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal = "true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="15dp"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:text="Save"
+        android:textSize="45sp"
+        android:textStyle="normal"/>
+
+
+</RelativeLayout>
