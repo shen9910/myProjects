@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html> 
+    <head>
+        <title>Flask intro</title>
+    </head>
+
+    <body>
+        <h1>{{ headline }}</h1>
+
+        <a href="{{ url_for('isitnewyear')}}">Is it New Year? <br></a>
+        <a href="{{ url_for('loops')}}">Loops in Flask <br></a>
+        <a href="{{ url_for('inheritance')}}">Inheritance in Flask <br></a>
+        <a href="{{ url_for('form')}}">Working with Forms<br></a>
+        <a href="{{ url_for('session_test')}}">Test Session<br></a>
+        <a href="{{ url_for('index')}}">Reset Page<br></a>
+        <a href={{ url_for('hello', name = 'Slava')}}>Greet Author</a>
+
+    </body>
+</html>
