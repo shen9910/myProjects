@@ -1,0 +1,14 @@
+{%extends "layout.html" %}
+
+{% block heading %}
+    Forms
+{% endblock %}
+
+{%block body%} 
+    <form action="{{url_for('get_value') }}", method="POST">
+        <input type="text" name="base" placeholder="Base">
+        <input type="number" name="amount" placeholder="amount">
+        <input type="text" name="rate" placeholder="Rate">
+        <button>Convert</button>
+    </form>
+{%endblock%}
