@@ -6,9 +6,17 @@
 
 {%block body%} 
     <form action="{{url_for('get_value') }}", method="POST">
-        <input type="text" name="base" placeholder="Base">
+        <select name="base">
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select>
+
         <input type="number" name="amount" placeholder="amount">
-        <input type="text" name="rate" placeholder="Rate">
+        <select name="rate">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="GBP">GBP</option>
+        </select>
         <button>Convert</button>
     </form>
 {%endblock%}
