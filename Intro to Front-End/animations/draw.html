@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Drawing</title>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+    <body>
+        <button id="download">Download image</button>
+
+        <div class="container">
+            <div id="options" class="row">
+                <select id="color-picker">
+                    <option value="black">Black</option>
+                    <option value="red">Red</option>
+                    <option value="blue">Blue</option>
+                    <option value="green">Green</option>
+                </select>
+                <select id="thickness-picker">
+                    <option value=1>1</option>
+                    <option value=2>2</option>
+                    <option value=3 selected>3</option>
+                    <option value=4>4</option>
+                    <option value=5>5</option>
+                    <option value=6>6</option>
+                    <option value=7>7</option>
+                    <option value=8>8</option>
+                    <option value=9>9</option>
+                    <option value=10>10</option>
+                </select>
+                <button id="erase">Erase</button>
+            </div>
+        </div>
+        <svg id="draw">
+        </svg>
+
+        <canvas id="canvas"></canvas>
+    </body>
+
+    <script>
+        var btn = document.querySelector('#download');
+        var svg = document.querySelector('#draw');
+        var canvas = document.querySelector("#canvas");
+
+        function triggerDownload (imgURI) {
+        var evt = new MouseEvent('click', {
+            view: window,
+            bubbles: false,
+            cancelable: true
+        });
+
+        var a = document.createElement('a');
+        a.setAttribute('download', 'image.png');
+        a.setAttribute('href', imgURI);
+        a.setAttribute('target', '_blank');
+
+        a.dispatchEvent(evt);
+        }
+
+        btn.addEventListener('click', function () {
+        var canvas = document.getElementById('canvas');
+        var ctx = canvas.getContext('2d');
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+        var data = (new XMLSerializer()).serializeToString(svg);
+        var DOMURL = window.URL || window.webkitURL || window;
+
+        var img = new Image();
+        var svgBlob = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+        var url = DOMURL.createObjectURL(svgBlob);
+
+        img.onload = function () {
+            ctx.drawImage(img, 0, 0);
+            DOMURL.revokeObjectURL(url);
+
+            var imgURI = canvas
+                .toDataURL('image/png')
+                .replace('image/png', 'image/octet-stream');
+
+            triggerDownload(imgURI);
+        };
+
+        img.src = url;
+        });
+    </script>
+
+    <script>
+
+        document.addEventListener('DOMContentLoaded', () => {
+        
+        // state
+        let draw = false;
+
+        // elements
+        let points = [];
+        let lines = [];
+        let svg = null;
+
+        function render() {
+
+            // create the selection area
+            svg = d3.select('#draw')
+                    .attr('height', window.innerHeight)
+                    .attr('width', window.innerWidth);
+
+            svg.on('mousedown', function() {
+                draw = true;
+                const coords = d3.mouse(this);
+                draw_point(coords[0], coords[1], false);
+            });
+
+            svg.on('mouseup', () =>{
+                draw = false;
+            });
+
+            svg.on('mousemove', function() {
+                if (!draw)
+                    return;
+                const coords = d3.mouse(this);
+                draw_point(coords[0], coords[1], true);
+            });
+
+            document.querySelector('#erase').onclick = () => {
+                for (let i = 0; i < points.length; i++)
+                    points[i].remove();
+                for (let i = 0; i < lines.length; i++)
+                    lines[i].remove();
+                points = [];
+                lines = [];
+            }
+
+        }
+
+        function draw_point(x, y, connect) {
+
+            const color = document.querySelector('#color-picker').value;
+            const thickness = document.querySelector('#thickness-picker').value;
+
+            if (connect) {
+                const last_point = points[points.length - 1];
+                const line = svg.append('line')
+                                .attr('x1', last_point.attr('cx'))
+                                .attr('y1', last_point.attr('cy'))
+                                .attr('x2', x)
+                                .attr('y2', y)
+                                .attr('stroke-width', thickness * 2)
+                                .style('stroke', color);
+                lines.push(line);
+            }
+
+            const point = svg.append('circle')
+                            .attr('cx', x)
+                            .attr('cy', y)
+                            .attr('r', thickness)
+                            .style('fill', color);
+            points.push(point);
+        }
+
+        render();
+        });
+
+
+
+
+    </script>
+</html>
